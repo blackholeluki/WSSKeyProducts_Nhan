@@ -1,0 +1,104 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_SANPHAM
+@{
+    ViewBag.Title = "ChiTietSanPham";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+<div class="container2">
+    <h3><a href="@Url.Action("Index","Home")">Home /</a> <a href="@Url.Action("LoaiSanPham","Home")">Shop /</a> <a href="#">Chi tiết sản phẩm</a></h3>
+    <section class="product-details">
+        <div class="product-image">
+            <img src="@Model.HINH_DAI_DIEN" alt="@Model.TENSP">
+        </div>
+        <div class="product-info">
+            <h1>@Model.TENSP</h1>
+            <p class="price">Giá: @string.Format("{0:N0}", Model.GIATIEN) VND</p>
+            <p class="price">Thời hạn: @Model.THANG tháng</p>
+            <p class="soluong">
+                Số lượng: @Model.SO_LUONG_TON_TRONG_KHO
+                - <span style="color:@(Model.SO_LUONG_TON_TRONG_KHO > 0 ? "green" : "red");">
+                    @(Model.SO_LUONG_TON_TRONG_KHO > 0 ? "Còn hàng" : "Hết hàng")
+                </span>
+            </p>
+
+            @if (Model.SO_LUONG_TON_TRONG_KHO > 0)
+            {
+                <button onclick="AddToCart(@Model.IDSP)">Thêm vào giỏ (Card, Visa, MasterCard, PayPal, MoMo,... )</button>
+            }
+            else
+            {
+                <button disabled style="background-color: gray; cursor: not-allowed;">Hết hàng</button>
+            }
+        </div>
+    </section>
+    <section class="description">
+        <h2>Thông tin sản phẩm</h2>
+        @Model.NOIDUNG_MOTA_SANPHAM
+    </section>
+    <section class="reviews">
+        <h2>Đánh giá</h2>
+        <p>Chưa có đánh giá nào.</p>
+    </section>
+</div>
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+    });
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+
+        // Check initial scroll position on page load
+        if (window.scrollY === 0) {
+            header.classList.remove("sticky");
+        } else {
+            header.classList.add("sticky");
+        }
+
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+
+        // Check for saved user preference in local storage
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true; // Set the toggle switch to checked if light mode is active
+            }
+        }
+
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+
+
+
+
+</script>

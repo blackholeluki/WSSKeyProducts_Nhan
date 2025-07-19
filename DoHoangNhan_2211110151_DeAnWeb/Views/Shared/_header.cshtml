@@ -1,0 +1,210 @@
+﻿
+
+@{
+    Layout = null;
+    var userEmail = Session["UserEmail"] as string;
+}
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function AddToCart(id) {
+        $.post("/Home/AddToCarts", { "id": id },
+            function (data) {
+                if (data.Code == '0') {
+                    alert("Thêm sản phẩm vào giỏ hàng thành công!, giỏ hàng đã có: " + data.CountMatHang);
+                    document.getElementById("SOLUONGMATHANG").innerText = data.CountMatHang;
+                }
+            })
+    }
+
+    function filterProducts(category) {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("FilterProducts", "Home")',
+            data: { category: category },
+            success: function (response) {
+                $('#productContainer').html(response);
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var loginModal = document.getElementById('loginModal');
+        var registerModal = document.getElementById('registerModal');
+        var loginBtn = document.getElementById('loginBtn');
+        var registerLink = document.getElementById('registerLink');
+        var closeBtns = document.querySelectorAll('.close');
+
+        loginBtn.onclick = function () {
+            loginModal.style.display = 'block';
+        }
+
+        registerLink.onclick = function () {
+            registerModal.style.display = 'block';
+            loginModal.style.display = 'none';
+        }
+
+        closeBtns.forEach(btn => {
+            btn.onclick = function () {
+                btn.closest('.modal').style.display = 'none';
+            }
+        })
+
+        window.onclick = function (event) {
+            if (event.target == loginModal || event.target == registerModal) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        $('#loginForm').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        $('#loginError').text(response.message).show();
+                    }
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+    // Xử lý nhập từ khóa tìm kiếm
+    $('#searchInput').on('input', function () {
+        var keyword = $(this).val();
+        if (keyword.length > 0) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetProductSuggestions", "Home")',
+                data: { keyword: keyword },
+                success: function (suggestions) {
+                    var suggestionBox = $('#suggestions');
+                    suggestionBox.empty();
+                    suggestions.forEach(function (suggestion) {
+                        suggestionBox.append('<div class="suggestion-item" data-id="' + suggestion.IDSP + '">' + suggestion.TENSP + '</div>');
+                    });
+                    suggestionBox.show();
+                }
+            });
+        } else {
+            $('#suggestions').hide();
+        }
+    });
+
+    // Sự kiện khi bấm vào gợi ý
+    $(document).on('click', '.suggestion-item', function () {
+        var productId = $(this).data('id'); // Lấy ID sản phẩm
+        var finalUrl = '@Url.Action("ChiTietSanPham", "Home", new { id = "__ID__" })'.replace('__ID__', productId);
+        window.location.href = finalUrl; // Điều hướng tới trang chi tiết sản phẩm
+    });
+
+    // Ẩn gợi ý khi click ra ngoài
+    $(document).click(function (event) {
+        if (!$(event.target).closest('.search-dropdown').length) {
+            $('#suggestions').hide();
+        }
+    });
+});
+
+</script>
+
+
+
+
+
+
+
+<header class="header">
+    <a href="@Url.Action("Index","Home")" class="logo"><img src="~/Content/image/logo.png" alt=""></a>
+
+    <ul class="navmenu">
+        <li><a href="@Url.Action("Index", "Home")">home</a></li>
+        <li class="shop-dropdown">
+            <a href="@Url.Action("LoaiSanPham", "Home")">shop</a>
+            <div class="dropdown-content">
+                @if (ViewBag.Categories != null)
+                {
+                    foreach (var category in ViewBag.Categories)
+                    {
+                        <a href="@Url.Action("DanhSachSanPhamTheoLoai", "SanPham", new { idLoai = category.IDLOAI })">
+                            @category.TENLOAI
+                        </a>
+                    }
+                }
+                <a href="@Url.Action("SanPham", "Home")" onclick="filterProducts('all')">Tất cả</a>
+            </div>
+        </li>
+        <li><a href="@Url.Action("SanPham", "Home")">sản phẩm</a></li>
+    </ul>
+
+
+    <div class="nav-icon">
+        <div class="search-dropdown">
+            <a id="searchIcon"><i class='bx bx-search'></i></a>
+            <div class="dropdown-search">
+                <input type="text" placeholder="Tìm kiếm..." id="searchInput" autocomplete="off" />
+                <div id="suggestions" class="suggestions-list"></div> <!-- Thêm phần này -->
+            </div>
+        </div>
+
+        @if (string.IsNullOrEmpty(userEmail))
+        {
+            <a href="#" id="loginBtn"><i class='bx bx-user'></i></a>
+        }
+        else
+        {
+            <a href="@Url.Action("UserOrders", "Account")" class="user">@userEmail</a>
+            <a class="logout" href="@Url.Action("Logout", "Account")">Logout</a>
+        }
+
+        <a href="@Url.Action("ChiTietGioHang","Home")"><i class='bx bx-cart'></i><span class="soluongsp" id="SOLUONGMATHANG">@Session["SOLUONGMATHANG"].ToString()</span></a>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+    </div>
+
+    <div class="toggle-container">
+        <input type="checkbox" id="mode-toggle" />
+        <label for="mode-toggle" class="toggle-switch">
+            <i class='bx bx-sun'></i>
+            <i class='bx bx-moon'></i>
+        </label>
+    </div>
+</header>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>Login</h5>
+        <p id="loginError" style="color: red; display: none;"></p>
+        <form id="loginForm" method="post" action="@Url.Action("Login", "Account")">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input class="form-control" type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="mt-3">Chưa có tài khoản? <a href="@Url.Action("Register", "Account")" id="registerLink">Đăng ký</a></p>
+    </div>
+</div>
+
+<!-- Products Container for Filtered Results -->
+<div id="productContainer">
+    <!-- Render filtered products here -->
+</div>
+
+<!-- CSS for the Shop Dropdown, Search Icon and Hover Effect -->

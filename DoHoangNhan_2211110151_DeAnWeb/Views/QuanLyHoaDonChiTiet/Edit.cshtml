@@ -1,0 +1,165 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON_CHITIET
+
+@{
+    ViewBag.Title = "ChinhSuaChiTietHoaDon";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<style>
+
+
+    .form-table {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 80%;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-table td {
+            padding: 10px;
+        }
+
+    .form-control {
+        width: calc(100% - 16px);
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-save, .btn-back {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+
+    .btn-save {
+        background-color: #438b4c;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-save:hover {
+            background-color: #357a3b;
+        }
+
+    .btn-back {
+        background-color: #438b4c;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-back:hover {
+            background-color: #357a3b;
+        }
+
+    .alert {
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+</style>
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHỈNH SỬA CHI TIẾT HÓA ĐƠN</strong></h2>
+        <br />
+    </div>
+
+    @if (ViewData["TRANGTHAICAPNHAT"] != null)
+    {
+        var message = ViewData["TRANGTHAICAPNHAT"].ToString();
+        var alertClass = message.Contains("CẬP NHẬT THÀNH CÔNG") ? "alert-success" : "alert-danger";
+        <div class="alert @alertClass text-center">
+            @message
+        </div>
+    }
+
+    @using (Html.BeginForm("Edit", "QuanLyHoaDonChiTiet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-table">
+            @Html.HiddenFor(model => model.IDCTHD)
+            <table class="table table-bordered">
+                <tr>
+                    <td style="width: 30%;">Nhập mã hóa đơn</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.MAHD, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MAHD, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập mã sản phẩm</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.MASP, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MASP, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập tên sản phẩm</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TENSP, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TENSP, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tháng sản phẩm</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.THANG, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.THANG, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập giá tiền</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.GIATIEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GIATIEN, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập số lượng</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.SOLUONG, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập thành tiền</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.THANH_TIEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.THANH_TIEN, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input type="submit" value="Lưu thay đổi" class="btn btn-save" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    <div class="text-center">
+        <a href="@Url.Action("Index", "QuanLyHoaDonChiTiet")" class="btn btn-back">Quay lại danh sách chi tiết hóa đơn</a>
+    </div>
+</div>

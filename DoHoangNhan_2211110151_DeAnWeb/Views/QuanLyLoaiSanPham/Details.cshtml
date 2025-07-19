@@ -1,0 +1,11 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_LOAISANPHAM
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<h2>Chi Tiết Loại Sản Phẩm</h2>
+<p><strong>ID Loại:</strong> @Model.IDLOAI</p>
+<p><strong>Tên Loại:</strong> @Model.TENLOAI</p>
+<p><strong>Hình Ảnh:</strong> <img src="@Model.HINHANH" width="100" /></p>
+<a href="@Url.Action("Index")" class="btn btn-primary">Quay Lại</a>

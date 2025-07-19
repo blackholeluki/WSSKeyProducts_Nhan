@@ -1,0 +1,59 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TAIKHOAN
+@{
+    ViewBag.Title = "ThemTaiKhoan";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>THÊM MỚI TÀI KHOẢN</strong></h2>
+        <br />
+    </div>
+
+    @using (Html.BeginForm("Create", "QuanLyAccount", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-table">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Nhập Email</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập Mật Khẩu</td>
+                    <td>
+                        @Html.PasswordFor(model => model.PASSWORD, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Xác nhận Mật Khẩu</td>
+                    <td>
+                        <input type="password" name="ConfirmPassword" class="form-control" />
+                        @Html.ValidationMessage("ConfirmPassword", "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập Quyền Truy Cập</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ACCESS, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ACCESS, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input class="btn btn-success" value="Thực hiện thêm" type="submit" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    <p>
+        @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

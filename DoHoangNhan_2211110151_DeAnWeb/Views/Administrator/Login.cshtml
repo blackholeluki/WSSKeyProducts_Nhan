@@ -1,0 +1,177 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TAIKHOAN
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!-- Import Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Arima:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQ3/azprG1Anm3QDgpJLIm9ao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+<style>
+    body {
+        font-family: 'Arima', cursive;
+        background-image: url('https://img.lovepik.com/background/20211021/large/lovepik-the-palm-of-science-and-technology-background-image_400121845.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-box {
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+    }
+
+    .login-logo {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+        .login-logo img {
+            max-width: 100%;
+            height: auto;
+        }
+
+    .login-form {
+        flex: 1;
+        padding: 30px;
+        text-align: left;
+    }
+
+        .login-form .mb-3 {
+            width: 100%;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .login-form label {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            width: 100%;
+        }
+
+        .login-form .btn-primary {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            background-color: #f7676a;
+            border-color: #f7676a;
+        }
+
+            .login-form .btn-primary:hover {
+                background-color: #4cff00;
+                border-color: #4cff00;
+            }
+
+    .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 38px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container-fluid login-container">
+    <div class="login-box">
+        <div class="login-logo">
+            <img src="/Content/image/logo.png" alt="Logo"> <!-- Logo image -->
+        </div>
+        <div class="login-form">
+            <h2 class="text-center mb-4">ĐĂNG NHẬP ADMIN</h2>
+            @using (Html.BeginForm("Login", "Administrator", FormMethod.Post, new { @class = "Form-Control", onsubmit = "return validateForm();" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    @Html.TextBoxFor(m => m.EMAIL, new { @class = "form-control", placeholder = "Nhập email" })
+                    @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu:</label>
+                    @Html.PasswordFor(m => m.PASSWORD, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                    @Html.ValidationMessageFor(m => m.PASSWORD, "", new { @class = "text-danger" })
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                        <i class="bi bi-eye"></i> <!-- Eye icon -->
+                    </button>
+                </div>
+                if (ViewBag.ShowCountdownMessage)
+                {
+                    <div class="alert alert-warning mt-3">
+                        Tài khoản bị khóa. Vui lòng đợi @ViewBag.CountdownValue giây để thử lại.
+                    </div>
+                }
+                else if (ViewBag.LoginAttemptsLeft < @ViewBag.MaxLoginAttempts)
+                {
+                    <div class="alert alert-warning mt-3">
+                        Bạn còn @ViewBag.LoginAttemptsLeft lần thử. Hãy cẩn thận!
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                </div>
+            }
+
+          
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.querySelector('[name="PASSWORD"]');
+        var toggleButton = document.querySelector('.toggle-password i');
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleButton.classList.remove('bi-eye');
+            toggleButton.classList.add('bi-eye-slash');
+        } else {
+            passwordField.type = "password";
+            toggleButton.classList.remove('bi-eye-slash');
+            toggleButton.classList.add('bi-eye');
+        }
+    }
+
+    function validateForm() {
+        var passwordField = document.querySelector('[name="PASSWORD"]');
+        if (passwordField.value.trim() === "") {
+            alert("Vui lòng nhập mật khẩu."); // Cảnh báo nếu mật khẩu bỏ trống
+            return false; // Ngăn gửi form
+        }
+        return true; // Cho phép gửi form
+    }
+</script>

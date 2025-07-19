@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WEBDB_DOHOANGNHAN_2211110151Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="EMAIL" />
+          </Key>
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PASSWORD" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PASSWORDSALT" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ACCESS" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_HOADON">
+          <Key>
+            <PropertyRef Name="IDHD" />
+          </Key>
+          <Property Name="IDHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAHD" Type="varchar" MaxLength="100" />
+          <Property Name="TEN_KHACH_HANG" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+          <Property Name="GHICHU" Type="nvarchar(max)" />
+          <Property Name="TONG_THANH_TIEN" Type="float" />
+          <Property Name="TRANG_THAI" Type="int" Nullable="false" />
+          <Property Name="NGAYBAN" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL_HOADON_CHITIET">
+          <Key>
+            <PropertyRef Name="IDCTHD" />
+          </Key>
+          <Property Name="IDCTHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAHD" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MASP" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TENSP" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GIATIEN" Type="float" Nullable="false" />
+          <Property Name="SOLUONG" Type="int" Nullable="false" />
+          <Property Name="THANH_TIEN" Type="float" Nullable="false" />
+          <Property Name="THANG" Type="int" Nullable="false" />
+          <Property Name="IDLOAI" Type="int" Nullable="false" />
+          <Property Name="LICENSE_KEYS" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TBL_LOAISANPHAM">
+          <Key>
+            <PropertyRef Name="IDLOAI" />
+          </Key>
+          <Property Name="IDLOAI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENLOAI" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="HINHANH" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TBL_MAKEY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MASP" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MAKEY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IS_USED" Type="bit" />
+        </EntityType>
+        <EntityType Name="TBL_SANPHAM">
+          <Key>
+            <PropertyRef Name="IDSP" />
+          </Key>
+          <Property Name="IDSP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MASP" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TENSP" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GIATIEN" Type="float" Nullable="false" />
+          <Property Name="GIACU" Type="float" />
+          <Property Name="SO_LUONG_TON_TRONG_KHO" Type="int" />
+          <Property Name="HINH_DAI_DIEN" Type="nvarchar" MaxLength="100" />
+          <Property Name="HINH_CHI_TIET_1" Type="nvarchar" MaxLength="100" />
+          <Property Name="HINH_CHI_TIET_2" Type="nvarchar" MaxLength="100" />
+          <Property Name="HINH_CHI_TIET_3" Type="nvarchar" MaxLength="100" />
+          <Property Name="HINH_CHI_TIET_4" Type="nvarchar" MaxLength="100" />
+          <Property Name="IDLOAI" Type="int" />
+          <Property Name="NOIDUNG_MOTA_SANPHAM" Type="ntext" />
+          <Property Name="THANG" Type="int" />
+        </EntityType>
+        <Association Name="FK_HOADON_TAIKHOAN">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
+          <End Role="TBL_HOADON" Type="Self.TBL_HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="EMAIL" />
+            </Principal>
+            <Dependent Role="TBL_HOADON">
+              <PropertyRef Name="EMAIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SANPHAM_LOAISANPHAM">
+          <End Role="TBL_LOAISANPHAM" Type="Self.TBL_LOAISANPHAM" Multiplicity="0..1" />
+          <End Role="TBL_SANPHAM" Type="Self.TBL_SANPHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_LOAISANPHAM">
+              <PropertyRef Name="IDLOAI" />
+            </Principal>
+            <Dependent Role="TBL_SANPHAM">
+              <PropertyRef Name="IDLOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WEBDB_DOHOANGNHAN_2211110151ModelStoreContainer">
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_HOADON" EntityType="Self.TBL_HOADON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_HOADON_CHITIET" EntityType="Self.TBL_HOADON_CHITIET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_LOAISANPHAM" EntityType="Self.TBL_LOAISANPHAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_MAKEY" EntityType="Self.TBL_MAKEY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_SANPHAM" EntityType="Self.TBL_SANPHAM" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HOADON_TAIKHOAN" Association="Self.FK_HOADON_TAIKHOAN">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="TBL_HOADON" EntitySet="TBL_HOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SANPHAM_LOAISANPHAM" Association="Self.FK_SANPHAM_LOAISANPHAM">
+            <End Role="TBL_LOAISANPHAM" EntitySet="TBL_LOAISANPHAM" />
+            <End Role="TBL_SANPHAM" EntitySet="TBL_SANPHAM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WEBDB_DOHOANGNHAN_2211110151Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="EMAIL" />
+          </Key>
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PASSWORDSALT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ACCESS" Type="Int32" />
+          <NavigationProperty Name="TBL_HOADON" Relationship="WEBDB_DOHOANGNHAN_2211110151Model.FK_HOADON_TAIKHOAN" FromRole="TAIKHOAN" ToRole="TBL_HOADON" />
+        </EntityType>
+        <EntityContainer Name="WEBDB_DOHOANGNHAN_2211110151Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <EntitySet Name="TBL_MAKEY" EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_MAKEY" />
+          <EntitySet Name="TBL_HOADON" EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON" />
+          <AssociationSet Name="FK_HOADON_TAIKHOAN" Association="WEBDB_DOHOANGNHAN_2211110151Model.FK_HOADON_TAIKHOAN">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="TBL_HOADON" EntitySet="TBL_HOADON" />
+          </AssociationSet>
+          <EntitySet Name="TBL_HOADON_CHITIET" EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON_CHITIET" />
+          <EntitySet Name="TBL_LOAISANPHAM" EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_LOAISANPHAM" />
+          <EntitySet Name="TBL_SANPHAM" EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_SANPHAM" />
+          <AssociationSet Name="FK_SANPHAM_LOAISANPHAM" Association="WEBDB_DOHOANGNHAN_2211110151Model.FK_SANPHAM_LOAISANPHAM">
+            <End Role="TBL_LOAISANPHAM" EntitySet="TBL_LOAISANPHAM" />
+            <End Role="TBL_SANPHAM" EntitySet="TBL_SANPHAM" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TBL_MAKEY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MASP" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MAKEY" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IS_USED" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="TBL_HOADON">
+          <Key>
+            <PropertyRef Name="IDHD" />
+          </Key>
+          <Property Name="IDHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAHD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TEN_KHACH_HANG" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GHICHU" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TONG_THANH_TIEN" Type="Double" />
+          <Property Name="TRANG_THAI" Type="Int32" Nullable="false" />
+          <Property Name="NGAYBAN" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="WEBDB_DOHOANGNHAN_2211110151Model.FK_HOADON_TAIKHOAN" FromRole="TBL_HOADON" ToRole="TAIKHOAN" />
+        </EntityType>
+        <Association Name="FK_HOADON_TAIKHOAN">
+          <End Type="WEBDB_DOHOANGNHAN_2211110151Model.TAIKHOAN" Role="TAIKHOAN" Multiplicity="0..1" />
+          <End Type="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON" Role="TBL_HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="EMAIL" />
+            </Principal>
+            <Dependent Role="TBL_HOADON">
+              <PropertyRef Name="EMAIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TBL_HOADON_CHITIET">
+          <Key>
+            <PropertyRef Name="IDCTHD" />
+          </Key>
+          <Property Name="IDCTHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAHD" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MASP" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TENSP" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GIATIEN" Type="Double" Nullable="false" />
+          <Property Name="SOLUONG" Type="Int32" Nullable="false" />
+          <Property Name="THANH_TIEN" Type="Double" Nullable="false" />
+          <Property Name="THANG" Type="Int32" Nullable="false" />
+          <Property Name="IDLOAI" Type="Int32" Nullable="false" />
+          <Property Name="LICENSE_KEYS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBL_LOAISANPHAM">
+          <Key>
+            <PropertyRef Name="IDLOAI" />
+          </Key>
+          <Property Name="IDLOAI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENLOAI" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HINHANH" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBL_SANPHAM" Relationship="WEBDB_DOHOANGNHAN_2211110151Model.FK_SANPHAM_LOAISANPHAM" FromRole="TBL_LOAISANPHAM" ToRole="TBL_SANPHAM" />
+        </EntityType>
+        <EntityType Name="TBL_SANPHAM">
+          <Key>
+            <PropertyRef Name="IDSP" />
+          </Key>
+          <Property Name="IDSP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MASP" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TENSP" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GIATIEN" Type="Double" Nullable="false" />
+          <Property Name="GIACU" Type="Double" />
+          <Property Name="SO_LUONG_TON_TRONG_KHO" Type="Int32" />
+          <Property Name="HINH_DAI_DIEN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HINH_CHI_TIET_1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HINH_CHI_TIET_2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HINH_CHI_TIET_3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HINH_CHI_TIET_4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IDLOAI" Type="Int32" />
+          <Property Name="NOIDUNG_MOTA_SANPHAM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="THANG" Type="Int32" />
+          <NavigationProperty Name="TBL_LOAISANPHAM" Relationship="WEBDB_DOHOANGNHAN_2211110151Model.FK_SANPHAM_LOAISANPHAM" FromRole="TBL_SANPHAM" ToRole="TBL_LOAISANPHAM" />
+        </EntityType>
+        <Association Name="FK_SANPHAM_LOAISANPHAM">
+          <End Type="WEBDB_DOHOANGNHAN_2211110151Model.TBL_LOAISANPHAM" Role="TBL_LOAISANPHAM" Multiplicity="0..1" />
+          <End Type="WEBDB_DOHOANGNHAN_2211110151Model.TBL_SANPHAM" Role="TBL_SANPHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_LOAISANPHAM">
+              <PropertyRef Name="IDLOAI" />
+            </Principal>
+            <Dependent Role="TBL_SANPHAM">
+              <PropertyRef Name="IDLOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WEBDB_DOHOANGNHAN_2211110151ModelStoreContainer" CdmEntityContainer="WEBDB_DOHOANGNHAN_2211110151Entities">
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="PASSWORDSALT" ColumnName="PASSWORDSALT" />
+                <ScalarProperty Name="ACCESS" ColumnName="ACCESS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_MAKEY">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TBL_MAKEY">
+              <MappingFragment StoreEntitySet="TBL_MAKEY">
+                <ScalarProperty Name="IS_USED" ColumnName="IS_USED" />
+                <ScalarProperty Name="MAKEY" ColumnName="MAKEY" />
+                <ScalarProperty Name="MASP" ColumnName="MASP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_HOADON">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON">
+              <MappingFragment StoreEntitySet="TBL_HOADON">
+                <ScalarProperty Name="NGAYBAN" ColumnName="NGAYBAN" />
+                <ScalarProperty Name="TRANG_THAI" ColumnName="TRANG_THAI" />
+                <ScalarProperty Name="TONG_THANH_TIEN" ColumnName="TONG_THANH_TIEN" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="TEN_KHACH_HANG" ColumnName="TEN_KHACH_HANG" />
+                <ScalarProperty Name="MAHD" ColumnName="MAHD" />
+                <ScalarProperty Name="IDHD" ColumnName="IDHD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_HOADON_CHITIET">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON_CHITIET">
+              <MappingFragment StoreEntitySet="TBL_HOADON_CHITIET">
+                <ScalarProperty Name="LICENSE_KEYS" ColumnName="LICENSE_KEYS" />
+                <ScalarProperty Name="IDLOAI" ColumnName="IDLOAI" />
+                <ScalarProperty Name="THANG" ColumnName="THANG" />
+                <ScalarProperty Name="THANH_TIEN" ColumnName="THANH_TIEN" />
+                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="GIATIEN" ColumnName="GIATIEN" />
+                <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+                <ScalarProperty Name="MASP" ColumnName="MASP" />
+                <ScalarProperty Name="MAHD" ColumnName="MAHD" />
+                <ScalarProperty Name="IDCTHD" ColumnName="IDCTHD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_LOAISANPHAM">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TBL_LOAISANPHAM">
+              <MappingFragment StoreEntitySet="TBL_LOAISANPHAM">
+                <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
+                <ScalarProperty Name="TENLOAI" ColumnName="TENLOAI" />
+                <ScalarProperty Name="IDLOAI" ColumnName="IDLOAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_SANPHAM">
+            <EntityTypeMapping TypeName="WEBDB_DOHOANGNHAN_2211110151Model.TBL_SANPHAM">
+              <MappingFragment StoreEntitySet="TBL_SANPHAM">
+                <ScalarProperty Name="THANG" ColumnName="THANG" />
+                <ScalarProperty Name="NOIDUNG_MOTA_SANPHAM" ColumnName="NOIDUNG_MOTA_SANPHAM" />
+                <ScalarProperty Name="IDLOAI" ColumnName="IDLOAI" />
+                <ScalarProperty Name="HINH_CHI_TIET_4" ColumnName="HINH_CHI_TIET_4" />
+                <ScalarProperty Name="HINH_CHI_TIET_3" ColumnName="HINH_CHI_TIET_3" />
+                <ScalarProperty Name="HINH_CHI_TIET_2" ColumnName="HINH_CHI_TIET_2" />
+                <ScalarProperty Name="HINH_CHI_TIET_1" ColumnName="HINH_CHI_TIET_1" />
+                <ScalarProperty Name="HINH_DAI_DIEN" ColumnName="HINH_DAI_DIEN" />
+                <ScalarProperty Name="SO_LUONG_TON_TRONG_KHO" ColumnName="SO_LUONG_TON_TRONG_KHO" />
+                <ScalarProperty Name="GIACU" ColumnName="GIACU" />
+                <ScalarProperty Name="GIATIEN" ColumnName="GIATIEN" />
+                <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+                <ScalarProperty Name="MASP" ColumnName="MASP" />
+                <ScalarProperty Name="IDSP" ColumnName="IDSP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

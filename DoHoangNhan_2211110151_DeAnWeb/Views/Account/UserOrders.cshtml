@@ -1,0 +1,130 @@
+﻿@model IEnumerable<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON>
+@{
+    ViewBag.Title = "UserOrders";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+<div class="container5">
+    <h1>Lịch sử mua hàng:</h1>
+</div>
+
+    @foreach (var order in Model)
+    {
+        <div class="container5">
+            <p><strong>Mã hóa đơn:</strong> @order.MAHD</p>
+            <p><strong>Ngày:</strong> @order.NGAYBAN.ToString()</p>
+            <p><strong>Họ Tên:</strong> @order.TEN_KHACH_HANG</p>
+            <p><strong>Email:</strong> @order.EMAIL</p>
+            <p><strong>Số điện thoại:</strong> @order.SDT</p>
+            <p><strong>Ghi chú:</strong> @order.GHICHU</p>
+            <p><strong>Tổng thanh toán:</strong> @string.Format("{0:N0}", order.TONG_THANH_TIEN) VND</p>
+            @{
+                DoHoangNhan_2211110151_DeAnWeb.Models.WEBDB_DOHOANGNHAN_2211110151Entities db = new DoHoangNhan_2211110151_DeAnWeb.Models.WEBDB_DOHOANGNHAN_2211110151Entities();
+                List<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON_CHITIET> lchitiet = db.TBL_HOADON_CHITIET.Where(ct => ct.MAHD == order.MAHD).ToList();
+            }
+            <h1>Chi tiết đơn hàng</h1>
+            <div class="order-details">
+                <table>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                    </tr>
+                    @foreach (var sanpham in lchitiet)
+                    {
+                        <tr>
+                            <td>@sanpham.TENSP</td>
+                            <td>@sanpham.SOLUONG</td>
+                            <td>@string.Format("{0:N0}", sanpham.THANH_TIEN) VND</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2">Tổng thanh toán:</td>
+                        <td>@string.Format("{0:N0}", order.TONG_THANH_TIEN) VND</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h1>Đơn hàng của bạn</h1>
+            <div class="license-keys">
+                <table>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Mã key</th>
+                    </tr>
+                    @foreach (var sanpham in lchitiet)
+                    {
+                        var lmaKey = db.TBL_MAKEY
+                                        .Where(k => k.MASP == sanpham.MASP && k.IS_USED == true)
+                                        .Take(sanpham.SOLUONG)
+                                        .ToList();
+
+                        foreach (var key in lmaKey)
+                        {
+                            <tr>
+                                <td>@sanpham.TENSP</td>
+                                <td>@key.MAKEY</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            handleStickyHeader();
+            initDarkModeToggle();
+            initMenuToggle();
+        });
+        function handleStickyHeader() {
+            const header = document.querySelector("header");
+
+            // Check initial scroll position on page load
+            if (window.scrollY === 0) {
+                header.classList.remove("sticky");
+            } else {
+                header.classList.add("sticky");
+            }
+
+            window.addEventListener("scroll", function () {
+                header.classList.toggle("sticky", window.scrollY > 0);
+            });
+        }
+
+        function initDarkModeToggle() {
+            const modeToggleBtn = document.getElementById("mode-toggle");
+            const body = document.body;
+
+            // Check for saved user preference in local storage
+            const savedMode = localStorage.getItem("mode");
+            if (savedMode) {
+                body.classList.add(savedMode);
+                if (savedMode === "light-mode") {
+                    modeToggleBtn.checked = true; // Set the toggle switch to checked if light mode is active
+                }
+            }
+
+            modeToggleBtn.addEventListener("click", function () {
+                body.classList.toggle("light-mode");
+                if (body.classList.contains("light-mode")) {
+                    localStorage.setItem("mode", "light-mode");
+                } else {
+                    localStorage.removeItem("mode");
+                }
+            });
+        }
+
+        function initMenuToggle() {
+            let menu = document.querySelector('#menu-icon');
+            let navmenu = document.querySelector('.navmenu');
+            menu.onclick = () => {
+                menu.classList.toggle('bx-x');
+                navmenu.classList.toggle('open');
+            }
+        }
+
+
+    </script>
+

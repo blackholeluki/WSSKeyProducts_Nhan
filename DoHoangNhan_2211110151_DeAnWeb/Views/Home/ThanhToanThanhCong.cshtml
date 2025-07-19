@@ -1,0 +1,135 @@
+﻿@model IEnumerable<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON>
+@{
+    ViewBag.Title = "ThanhToanThanhCong";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+@{
+    DoHoangNhan_2211110151_DeAnWeb.Models.WEBDB_DOHOANGNHAN_2211110151Entities db = new DoHoangNhan_2211110151_DeAnWeb.Models.WEBDB_DOHOANGNHAN_2211110151Entities();
+    List<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON> list_hoa_don_da_hoan_thanh = Model.Where(t => t.TRANG_THAI == 1).ToList();
+
+    var latestOrder = list_hoa_don_da_hoan_thanh.OrderByDescending(t => t.NGAYBAN).FirstOrDefault();
+}
+
+@if (latestOrder != null)
+{
+    <div class="container5">
+        <h3>Cảm ơn @latestOrder.TEN_KHACH_HANG đã mua hàng! Đơn hàng của bạn đã thành công.</h3>
+        <p><strong>Mã hóa đơn:</strong> @latestOrder.MAHD</p>
+        <p><strong>Ngày:</strong> @latestOrder.NGAYBAN.ToString()</p>
+        <p><strong>Họ Tên:</strong> @latestOrder.TEN_KHACH_HANG</p>
+        <p><strong>Email:</strong> @latestOrder.EMAIL</p>
+        <p><strong>Số điện thoại:</strong> @latestOrder.SDT</p>
+        <p><strong>Ghi chú:</strong> @latestOrder.GHICHU</p>
+        <p><strong>Tổng thanh toán:</strong> @string.Format("{0:N0}", latestOrder.TONG_THANH_TIEN) VND</p>
+        @{
+
+            List<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON_CHITIET> lchitiet = db.TBL_HOADON_CHITIET.Where(ct => ct.MAHD == latestOrder.MAHD).ToList();
+        }
+        <h1>Chi tiết đơn hàng</h1>
+        <div class="order-details">
+            <table>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
+                </tr>
+                @foreach (var sanpham in lchitiet)
+                {
+                    <tr>
+                        <td>@sanpham.TENSP</td>
+                        <td>@sanpham.SOLUONG</td>
+                        <td>@string.Format("{0:N0}", sanpham.THANH_TIEN) VND</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2">Tổng thanh toán:</td>
+                    <td>@string.Format("{0:N0}", latestOrder.TONG_THANH_TIEN) VND</td>
+                </tr>
+            </table>
+        </div>
+
+        <h1>Đơn hàng của bạn</h1>
+        <div class="license-keys">
+            <table>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Mã key</th>
+                </tr>
+                @foreach (var sanpham in lchitiet)
+                {
+                    var lmaKey = db.TBL_MAKEY
+                                    .Where(k => k.MASP == sanpham.MASP && k.IS_USED == true)
+                                    .Take(sanpham.SOLUONG)
+                                    .ToList();
+
+                    foreach (var key in lmaKey)
+                    {
+                        <tr>
+                            <td>@sanpham.TENSP</td>
+                            <td>@key.MAKEY</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+}
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+    });
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+
+        // Check initial scroll position on page load
+        if (window.scrollY === 0) {
+            header.classList.remove("sticky");
+        } else {
+            header.classList.add("sticky");
+        }
+
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+
+        // Check for saved user preference in local storage
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true; // Set the toggle switch to checked if light mode is active
+            }
+        }
+
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+
+
+</script>

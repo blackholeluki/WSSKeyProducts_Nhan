@@ -1,0 +1,91 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON
+
+@{
+    ViewBag.Title = "ChinhSuaHoaDon";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHỈNH SỬA HÓA ĐƠN</strong></h2>
+        <br />
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewData["TRANGTHAICAPNHAT"] as string))
+    {
+        <div class="text-center text-success">
+            @Html.Raw(ViewData["TRANGTHAICAPNHAT"])
+        </div>
+    }
+
+    @using (Html.BeginForm("Edit", "QuanLyHoaDon", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-table">
+            @Html.HiddenFor(model => model.IDHD)
+            <table class="table table-bordered">
+                <tr>
+                    <td style="width: 30%;">Nhập mã hóa đơn</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.MAHD, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MAHD, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập tên khách hàng</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TEN_KHACH_HANG, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TEN_KHACH_HANG, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập số điện thoại</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.SDT, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập địa chỉ giao hàng</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập tổng thành tiền</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TONG_THANH_TIEN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TONG_THANH_TIEN, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập trạng thái</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TRANG_THAI, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TRANG_THAI, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nhập ngày bán</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.NGAYBAN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NGAYBAN, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input type="submit" value="Lưu thay đổi" class="btn btn-save" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+<p>
+    @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+</p>
+</div>

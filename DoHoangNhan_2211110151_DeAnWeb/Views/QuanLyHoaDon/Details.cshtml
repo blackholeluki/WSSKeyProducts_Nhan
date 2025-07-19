@@ -1,0 +1,50 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON
+@{
+    ViewBag.Title = "ChiTietHoaDon";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHI TIẾT HÓA ĐƠN</strong></h2>
+        <br />
+    </div>
+
+    <div class="detail-table">
+        <table class="table table-bordered">
+            <tr>
+                <td>Mã hóa đơn</td>
+                <td>@Html.DisplayFor(model => model.MAHD)</td>
+            </tr>
+            <tr>
+                <td>Tên khách hàng</td>
+                <td>@Html.DisplayFor(model => model.TEN_KHACH_HANG)</td>
+            </tr>
+            <tr>
+                <td>Số điện thoại</td>
+                <td>@Html.DisplayFor(model => model.SDT)</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ giao hàng</td>
+                <td>@Html.DisplayFor(model => model.EMAIL)</td>
+            </tr>
+            <tr>
+                <td>Tổng thành tiền</td>
+                <td>@Html.DisplayFor(model => model.TONG_THANH_TIEN)</td>
+            </tr>
+            <tr>
+                <td>Trạng thái</td>
+                <td>@Html.DisplayFor(model => model.TRANG_THAI)</td>
+            </tr>
+            <tr>
+                <td>Ngày bán</td>
+                <td>@Html.DisplayFor(model => model.NGAYBAN)</td>
+            </tr>
+        </table>
+    </div>
+
+    <p>
+        @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

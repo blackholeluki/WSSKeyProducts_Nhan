@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="52d0a79bfb0c4e7cadd1a21c1290bd2c" Name="Diagram1">
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TAIKHOAN" Width="1.5" PointX="5.875" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_MAKEY" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON" Width="1.5" PointX="8.125" PointY="0.75" />
+        <AssociationConnector Association="WEBDB_DOHOANGNHAN_2211110151Model.FK_HOADON_TAIKHOAN" />
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_HOADON_CHITIET" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_LOAISANPHAM" Width="1.5" PointX="3.75" PointY="6.125" />
+        <EntityTypeShape EntityType="WEBDB_DOHOANGNHAN_2211110151Model.TBL_SANPHAM" Width="1.5" PointX="6" PointY="5.125" />
+        <AssociationConnector Association="WEBDB_DOHOANGNHAN_2211110151Model.FK_SANPHAM_LOAISANPHAM" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

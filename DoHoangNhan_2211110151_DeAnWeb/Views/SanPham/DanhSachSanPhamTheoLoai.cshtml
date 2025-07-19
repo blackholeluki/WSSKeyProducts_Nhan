@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_SANPHAM>
+@{
+    ViewBag.Title = "DanhSachSanPhamTheoLoai";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+<div class="container">
+    <h3>Sản phẩm của @ViewBag.TenLoaiSanPham</h3>
+    <div class="listProduct">
+        @foreach (var item in Model)
+        {
+            <div class="item">
+                <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.IDSP })">
+                    <img src="@item.HINH_DAI_DIEN" alt="@item.TENSP">
+                    <h2>@item.TENSP</h2>
+                    <div class="price">@string.Format("{0:N0}", item.GIATIEN) VND</div>
+                </a>
+                <br />
+                <button class="addCart" onclick="AddToCart(@item.IDSP)">
+                    Thêm vào giỏ
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+    });
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+        if (window.scrollY === 0) {
+            header.classList.remove("sticky");
+        } else {
+            header.classList.add("sticky");
+        }
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true;
+            }
+        }
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+</script>

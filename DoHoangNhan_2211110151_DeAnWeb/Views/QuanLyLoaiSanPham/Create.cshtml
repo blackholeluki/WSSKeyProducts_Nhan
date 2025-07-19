@@ -1,0 +1,60 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_LOAISANPHAM
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/Content/ckfinder/ckfinder.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h2><strong>THÊM LOẠI SẢN PHẨM</strong></h2>
+            </div>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Tên Loại Sản Phẩm</td>
+                            <td>
+                                @Html.TextBoxFor(model => model.TENLOAI, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TENLOAI, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hình Ảnh</td>
+                            <td>
+                                @Html.EditorFor(model => model.HINHANH, new { htmlAttributes = new { @class = "form-control", @id = "txt_hinhanh" } })
+                                @Html.ValidationMessageFor(model => model.HINHANH, "", new { @class = "text-danger" })
+                                <input id="btn_hinhanh" type="button" value="browse" class="btn btn-secondary mt-2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <input type="submit" value="Thêm Loại Sản Phẩm" class="btn btn-success" />
+                                <a href="@Url.Action("Index", "QuanLyLoaiSanPham")" class="btn btn-primary">Quay Lại</a>
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Mở CKFinder khi nhấn nút 'browse'
+    $("#btn_hinhanh").click(function () {
+        var ckfinder = new CKFinder();
+        ckfinder.selectActionFunction = function (fileUrl) {
+            $("#txt_hinhanh").val(fileUrl); // Gán đường dẫn file vào input
+        };
+        ckfinder.popup(); // Mở CKFinder để duyệt ảnh
+    });
+</script>
+

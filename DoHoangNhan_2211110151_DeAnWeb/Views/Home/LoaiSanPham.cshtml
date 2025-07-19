@@ -1,0 +1,92 @@
+﻿@model IEnumerable<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_LOAISANPHAM>
+
+@{
+    ViewBag.Title = "LoaiSanPham";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+
+<div class="container">
+    <h3><a href="@Url.Action("Index","Home")">Home /</a> <a href="#"> Shop</a></h3>
+    <h3>Các Loại Sản Phẩm</h3>
+    <div class="listProduct">
+        @foreach (var loai in Model)
+        {
+            <div class="item">
+                <div class="card">
+                    <a href="@Url.Action("DanhSachSanPhamTheoLoai", "SanPham", new { idLoai = loai.IDLOAI })">
+                        <img src="@loai.HINHANH" alt="@loai.TENLOAI">
+                        <h2>@loai.TENLOAI</h2>
+                        <br />
+                        <button>
+                            Chọn sản phẩm
+                        </button>
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+    });
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+
+        // Check initial scroll position on page load
+        if (window.scrollY === 0) {
+            header.classList.remove("sticky");
+        } else {
+            header.classList.add("sticky");
+        }
+
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+
+        // Check for saved user preference in local storage
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true; // Set the toggle switch to checked if light mode is active
+            }
+        }
+
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+
+
+</script>

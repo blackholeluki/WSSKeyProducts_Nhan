@@ -1,0 +1,62 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_SANPHAM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h2><strong>THÔNG TIN SẨN PHẨM</strong></h2>
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Mã sản phẩm</td>
+                    <td>@Html.DisplayFor(model => model.MASP)</td>
+                </tr>
+                <tr>
+                    <td>Tên sản phẩm</td>
+                    <td>@Html.DisplayFor(model => model.TENSP)</td>
+                </tr>
+                <tr>
+                    <td>Số lượng tồn kho</td>
+                    <td>@Html.DisplayFor(model => model.SO_LUONG_TON_TRONG_KHO)</td>
+                </tr>
+                <tr>
+                    <td>Tháng</td>
+                    <td>@Html.DisplayFor(model => model.THANG)</td>
+                </tr>
+                <tr>
+                    <td>Giá tiền</td>
+                    <td>@Html.DisplayFor(model => model.GIATIEN)</td>
+                </tr>
+                <tr>
+                    <td>Mã key hoặc tài khoản</td>
+                    <td>
+                        @if (ViewBag.ProductKeys != null && ViewBag.ProductKeys.Count > 0)
+                        {
+                            foreach (var key in ViewBag.ProductKeys)
+                            {
+                                <div>@key.MAKEY</div>
+                            }
+                        }
+                        else
+                        {
+                            <div>Không có mã key hoặc tài khoản</div>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Hình đại diện</td>
+                    <td><img src="@Model.HINH_DAI_DIEN" style="width:200px;" /></td>
+                </tr>
+            </table>
+            <p>
+                @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+            </p>
+        </div>
+    </div>
+</div>

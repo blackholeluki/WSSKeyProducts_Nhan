@@ -1,0 +1,68 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "ChinhSuaTaiKhoan";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHỈNH SỬA TÀI KHOẢN</strong></h2>
+        <br />
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewData["TRANGTHAICAPNHAT"] as string))
+    {
+        <div class="text-center text-success">
+            @Html.Raw(ViewData["TRANGTHAICAPNHAT"])
+        </div>
+    }
+
+    @using (Html.BeginForm("Edit", "QuanLyAccount", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.EMAIL) <!-- Để nhận diện tài khoản cụ thể -->
+
+        <div class="form-table">
+            <table class="table table-bordered">
+                <tr>
+                    <td style="width: 30%;">Email</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control", @readonly = "readonly" }) <!-- Email không thể chỉnh sửa -->
+                        @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Đặt lại Mật Khẩu</td>
+                    <td>
+                        @Html.PasswordFor(model => model.PASSWORD, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Xác nhận Mật Khẩu</td>
+                    <td>
+                        <input type="password" name="ConfirmPassword" class="form-control" />
+                        @Html.ValidationMessage("ConfirmPassword", "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Quyền Truy Cập</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ACCESS, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ACCESS, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input type="submit" value="Lưu thay đổi" class="btn btn-save" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    <p>
+        @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

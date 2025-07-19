@@ -1,0 +1,259 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.giohang
+@{
+    ViewBag.Title = "ChiTietGioHang";
+    Layout = "~/Views/Shared/_master.cshtml";
+    var userEmail = Session["UserEmail"] as string;
+}
+
+<main>
+    <div class="container3">
+        <h2>Sản phẩm</h2>
+        @foreach (var item in Model.SP)
+        {
+            <div class="cart-item">
+                <img src="@item.HINH" alt="...">
+                <div class="item-details">
+                    <h3>@item.TENSP</h3>
+                    <p><span class="new-price">@string.Format("{0:N0}", item.GIATIEN) VND</span></p>
+                    <p>Thời hạn: @item.THANG tháng</p>
+                    <p>Số lượng: @item.SO_LUONG</p>
+                    <p>Tổng giá trị sản phẩm: <span>@string.Format("{0:N0}", item.THANHTIEN) VND</span></p>
+                    <a href="@Url.Action("XoaSanPhamTrongGioHang", "Home", new { id = item.ID })"
+                       onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" class="remove">Xóa sản phẩm</a>
+                </div>
+                <form class="button">
+                    <div class="value-button" onclick="decreaseValue(@item.ID)" value="Decrease Value">-</div>
+                    <input type="number" id="number_@item.ID" value="@item.SO_LUONG" readonly style="width: 30px;" data-max-quantity="@item.SO_LUONG_TON_TRONG_KHO" />
+
+
+                    <div class="value-button" onclick="increaseValue(@item.ID)" value="Increase Value">+</div>
+                </form>
+            </div>
+            <hr>
+        }
+
+        <div class="cart-totals">
+            <h2>Thanh toán</h2>
+            <p>Tổng giá trị phải thanh toán: <span>@string.Format("{0:N0}", Model.TONGTIEN) VND</span></p>
+            <button type="button" class="checkout-button" onclick="checkLogin()">Đến trang thanh toán</button>
+        </div>
+        <p class="quaylai"><a href="@Url.Action("SanPham","Home")">Quay lại trang sản phẩm</a></p>
+    </div>
+</main>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>Login</h5>
+        <form method="post" action="@Url.Action("Login", "Account")">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Basic styling for the header and modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+        initFormValidation();
+        increaseValue(id);
+    });
+
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true;
+            }
+        }
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+
+    function updateCart(id, quantity) {
+        $.ajax({
+            url: '@Url.Action("UpdateQuantity", "Home")',
+            type: 'POST',
+            data: {
+                id: id,
+                quantity: quantity
+            },
+            success: function (response) {
+                if (response.Code === 0) {
+                    location.reload();
+                } else {
+                    alert(response.Msg);
+                }
+            },
+            error: function () {
+                alert('Error updating quantity');
+            }
+        });
+    }
+
+    function increaseValue(id) {
+        let quantityInput = document.getElementById('number_' + id);
+        let value = parseInt(quantityInput.value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        quantityInput.value = value;
+        updateCart(id, value);
+    }
+
+    function decreaseValue(id) {
+        let quantityInput = document.getElementById('number_' + id);
+        let value = parseInt(quantityInput.value, 10);
+        value = isNaN(value) ? 0 : value;
+        if (value > 1) {
+            value--;
+            quantityInput.value = value;
+            updateCart(id, value);
+        }
+    }
+
+    function checkLogin() {
+        var userEmail = '@(Session["UserEmail"] as string)';
+        if (!userEmail) {
+            var modal = document.getElementById("loginModal");
+            modal.style.display = "block";
+        } else {
+            window.location.href = "@Url.Action("ThanhToan", "Home")";
+        }
+    }
+
+    function increaseValue(id) {
+        let quantityInput = document.getElementById('number_' + id);
+        let value = parseInt(quantityInput.value, 10);
+        value = isNaN(value) ? 0 : value;
+
+        // Lấy số lượng tồn kho tối đa
+        let maxQuantity = parseInt(quantityInput.getAttribute('data-max-quantity'), 10);
+
+        // Kiểm tra nếu số lượng hiện tại đã đạt giới hạn tồn kho
+        if (value < maxQuantity) {
+            value++;
+            quantityInput.value = value;
+            updateCart(id, value);
+        } else {
+            alert("Không thể thêm sản phẩm. Số lượng của sản phẩm đã đạt giới hạn.");
+        }
+    }
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var modal = document.getElementById("loginModal");
+        var closeBtn = document.querySelector(".close");
+
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    );
+</script>

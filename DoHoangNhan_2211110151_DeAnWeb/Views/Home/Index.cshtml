@@ -1,0 +1,133 @@
+﻿@model IEnumerable<DoHoangNhan_2211110151_DeAnWeb.Models.TBL_SANPHAM>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_master.cshtml";
+}
+
+<section class="main-home">
+
+    <div class="main-text">
+        <h1>WELCOME TO <span class="typing-effect"></span></h1>
+        <p>Hãy khám phá HBmarket và trải nghiệm sự khác biệt từ các sản phẩm và dịch vụ chất lượng cao mà chúng tôi mang lại.</p>
+        <a href="@Url.Action("LoaiSanPham","Home")" class="main-btn">Mua Ngay<i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+</section>
+
+<hr class="gachngang">
+
+<div class="gioithieu dark-bg">
+
+    <h2>TẠI SAO CHỌN CHÚNG TÔI</h2>
+    <div class="vechungtoi">
+        <div>
+            <i class='bx bx-support'></i>
+            <span>HỖ TRỢ 24/7</span>
+        </div>
+        <div>
+            <i class='bx bx-timer'></i>
+            <span>CÓ NGAY LẬP TỨC</span>
+        </div>
+        <div>
+            <i class='bx bx-check-shield'></i>
+            <span>BẢO MẬT TUYỆT ĐỐI</span>
+        </div>
+        <div>
+            <i class='bx bx-star'></i>
+            <span>85000 KHÁCH HÀNG</span>
+        </div>
+    </div>
+</div>
+<div class="sanphamnoibat">
+    <h2 class="h2sp">SẢN PHẨM BÁN CHẠY</h2>
+    <div class="product-container">
+        <img class="hinhwin10" src="~/Content/image/windows-11-pro.jpg">
+        <div class="logowin10-container">
+            <img class="logowin10" src="~/Content/image/Windows_11_Logo.png">
+            <p class="product-description">
+                🔧 Key Windows 11 :
+                <br>
+                Sự xuất hiện của hệ điều hành Windows 11 đã thổi một làn gió mới mẻ vào cộng đồng người dùng Windows trên toàn thế giới, nhất là khi tất cả đã quá quen với Windows 10 trước kia. Windows 11 sở hữu giao diện đẹp mắt và vô vàn tính năng thú vị, không chỉ nâng cao tính thẩm mỹ mà còn đem đến hiệu suất đáng kinh ngạc.
+                <br><br>
+                🎯 Đó là lý do mà rất nhiều người dùng đã chuyển sang mua key Windows 11 Pro bản quyền để trải nghiệm các tính năng mới, được Microsoft hỗ trợ về mặt kỹ thuật, không lo bị gặp phải lỗi như khi dùng phiên bản cũ.
+            </p>
+            <a href="@Url.Action("LoaiSanPham", "Home")" class="buywin11">Mua Key Windows 11<i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+    </div>
+    <div class="product-container">
+        <div class="logowin10-container">
+            <img class="logowin10" src="~/Content/image/netflixlogo.png">
+            <p class="product-description">
+                🔧 Netflix Premium :
+                <br>
+                Netflix là ứng dụng xem phim trực tuyến được yêu thích và phổ biến nhất hiện nay với kho phim chất lượng cao và nội dung đa dạng.
+                <br><br>
+                🎯 Mua tài khoản Netflix chính chủ giá rẻ ở đâu ? Chúng tôi chỉ cung cấp duy nhất các tài khoản Netflix Premium 4K giá rẻ nhất thị trường. Giá chỉ từ 49.000đ một tháng, giúp bạn có những phút giây thăng hoa cùng những bộ phim Netflix chất lượng cao
+            </p>
+            <a href="@Url.Action("LoaiSanPham", "Home")" class="buynetflix">Mua Netflix Account<i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+        <img class="hinhnetflix" src="~/Content/image/netflix-premium.png">
+    </div>
+    <div class="product-container">
+        <img class="hinhwin10" src="~/Content/image/spotify.jpg">
+        <div class="logowin10-container">
+            <img class="logowin10" src="~/Content/image/spotifylogo.png">
+            <p class="product-description">
+                🔧 Spotify Premium :
+                <br>
+                Spotify là ứng dụng nghe nhạc bản quyền nổi tiếng trên toàn thế giới. Spotify có hàng triệu bản nhạc từ tất cả mọi nơi trên thế giới bao gồm cả các bài hát ở Việt Nam.
+                <br><br>
+                🎯 Đây là gói gia hạn trên chính tài khoản Spotify mà bạn đang sử dụng. Bạn không cần đổi sang tài khoản mới để sử dụng Premium.
+            </p>
+            <a href="@Url.Action("LoaiSanPham", "Home")" class="buyspotify">Mua Spotify Premium<i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+    </div>
+    <h2 class="h2card">SẢN PHẨM MỚI</h2>
+    <div class="cardsanpham-container">
+        <div class="cardsanpham">
+            <a href="@Url.Action("LoaiSanPham", "Home")">
+                <img src="~/Content/image/netflix-premium.png" alt="">
+                <h4>Tài khoản Netflix Premium 1 năm</h4>
+                <div>
+                    <span>149,000 VND</span>
+                    <br>
+                    <button>Chọn sản phẩm</button>
+                </div>
+            </a>
+        </div>
+        <div class="cardsanpham">
+            <a href="@Url.Action("LoaiSanPham", "Home")">
+                <img src="~/Content/image/spotify.jpg" alt="">
+                <h4>Tài khoản Spotify Premium 3 tháng</h4>
+                <div>
+                    <span>125,000 VND</span>
+                    <br>
+                    <button>Chọn sản phẩm</button>
+                </div>
+            </a>
+        </div>
+        <div class="cardsanpham">
+            <a href="@Url.Action("LoaiSanPham", "Home")">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ-WZAIAjGp-FVF1FSlJCILqCzvIbYZv255A&s" alt="">
+                <h4>ChatGPT (OpenAI) Tài khoản 1 tháng</h4>
+                <div>
+                    <span>389,000 VND</span>
+                    <br>
+                    <button>Chọn sản phẩm</button>
+                </div>
+            </a>
+        </div>
+        <div class="cardsanpham">
+            <a href="@Url.Action("LoaiSanPham", "Home")">
+                <img src="https://itcuaban.com/wp-content/uploads/2022/10/nang-cap-youtube-premium.jpg" alt="">
+                <h4>Youtube Premium 3 tháng</h4>
+                <div>
+                    <span>129,000 VND</span>
+                    <br>
+                    <button>Chọn sản phẩm</button>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,88 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TBL_HOADON_CHITIET
+
+@{
+    ViewBag.Title = "ChiTietHoaDon";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<style>
+
+
+    .form-table {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 80%;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-table td {
+            padding: 10px;
+        }
+
+    .btn-light-green {
+        background-color: #5cb85c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn-light-green:hover {
+            background-color: #4cae4c;
+        }
+
+    .dl-horizontal dt {
+        float: left;
+        width: 160px;
+        clear: left;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 180px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHI TIẾT CHI TIẾT HÓA ĐƠN</strong></h2>
+        <br />
+    </div>
+
+    <div class="form-table">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.MAHD)</dt>
+            <dd>@Html.DisplayFor(model => model.MAHD)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.MASP)</dt>
+            <dd>@Html.DisplayFor(model => model.MASP)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.TENSP)</dt>
+            <dd>@Html.DisplayFor(model => model.TENSP)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.THANG)</dt>
+            <dd>@Html.DisplayFor(model => model.THANG)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.GIATIEN)</dt>
+            <dd>@Html.DisplayFor(model => model.GIATIEN)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.SOLUONG)</dt>
+            <dd>@Html.DisplayFor(model => model.SOLUONG)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.THANH_TIEN)</dt>
+            <dd>@Html.DisplayFor(model => model.THANH_TIEN)</dd>
+        </dl>
+    </div>
+
+    <div class="text-center" style="margin-top: 20px;">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IDCTHD }, new { @class = "btn btn-light-green btn-sm" }) |
+        @Html.ActionLink("Quay lại trang chủ", "Index", null, new { @class = "btn btn-light-green btn-sm" })
+    </div>
+</div>

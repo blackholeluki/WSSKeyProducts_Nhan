@@ -1,0 +1,189 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.giohang
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_master.cshtml";
+    var userEmail = Session["UserEmail"] as string;
+}
+@using (Html.BeginForm("ThanhToan", "Home", FormMethod.Post, new { @class = "needs-validation", id = "checkout-form", novalidate = "true" }))
+{
+    <div class="container4">
+        <main>
+            @if (ViewData["TRANGTHAITHANHTOAN"] != null)
+            {
+                <div class="alert alert-warning" style="color: red">
+                    @ViewData["TRANGTHAITHANHTOAN"]
+                </div>
+            }
+            <section class="checkout">
+                <div class="billing-details">
+                    <h2>Chi tiết thanh toán</h2>
+                    <label for="TENKHACHHANG">Họ và tên:</label>
+                    <br />
+                    <input type="text" id="TENKHACHHANG" name="TENKHACHHANG" required value="@ViewData["TENKHACHANG"]" style="width: 100%;">
+                    <br />
+                    <label for="SODIENTHOAI">Số điện thoại:</label>
+                    <br />
+                    <input type="tel" id="SODIENTHOAI" name="SODIENTHOAI" required value="@ViewData["SODIENTHOAI"]" style="width: 100%;">
+                    <br />
+                </div>
+                <div class="additional-information">
+                    <h2>Thông tin thêm</h2>
+                    <label for="GHICHUDONHANG">Ghi chú đơn hàng (tùy chọn):</label>
+                    <br />
+                    <textarea id="GHICHUDONHANG" name="GHICHUDONHANG" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú về tài khoản,..." style="width: 100%;"></textarea>
+                </div>
+            </section>
+
+            <section class="order-summary">
+                <h2>Đơn hàng của bạn</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Tổng giá trị sản phẩm</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SP)
+                        {
+                            <tr>
+                                <td>@item.TENSP - @item.THANG tháng</td>
+                                <td>x @item.SO_LUONG</td>
+                                <td>@string.Format("{0:N0}", item.GIATIEN) VND</td>
+                                <td>
+                                    <a href="@Url.Action("XoaSanPhamTrongGioHang", "Home", new { id = item.ID })" onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" class="remove">Xóa sản phẩm</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2">Tổng giá trị phải thanh toán</th>
+                            <th>@string.Format("{0:N0}", ViewData["TONGTIEN"]) VND</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
+
+            <section class="payment-methods">
+                <h2>Thanh toán</h2>
+                <div class="payment-form">
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" value="paypal" checked> PayPal
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="PayPal">
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" id="momo" value="momo"> MoMo
+                        <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo">
+                    </label>
+                </div>
+                <hr class="hr2">
+                <label class="terms">
+                    <input type="checkbox" id="terms" required> Tôi đã đọc và đồng ý với các điều khoản và điều kiện của trang web
+                </label>
+                <button type="submit" class="btn btn-primary">Thanh toán</button>
+            </section>
+        </main>
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        handleStickyHeader();
+        initDarkModeToggle();
+        initMenuToggle();
+        initFormValidation();
+    });
+
+    function handleStickyHeader() {
+        const header = document.querySelector("header");
+
+        if (window.scrollY === 0) {
+            header.classList.remove("sticky");
+        } else {
+            header.classList.add("sticky");
+        }
+
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+    }
+
+    function initDarkModeToggle() {
+        const modeToggleBtn = document.getElementById("mode-toggle");
+        const body = document.body;
+
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode) {
+            body.classList.add(savedMode);
+            if (savedMode === "light-mode") {
+                modeToggleBtn.checked = true;
+            }
+        }
+
+        modeToggleBtn.addEventListener("click", function () {
+            body.classList.toggle("light-mode");
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.removeItem("mode");
+            }
+        });
+    }
+
+    function initMenuToggle() {
+        let menu = document.querySelector('#menu-icon');
+        let navmenu = document.querySelector('.navmenu');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navmenu.classList.toggle('open');
+        }
+    }
+
+    function initFormValidation() {
+        document.getElementById('checkout-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (validateForm()) {
+                submitForm();
+            }
+        });
+    }
+
+    function validateForm() {
+        const name = document.getElementById("TENKHACHHANG").value.trim();
+        const phone = document.getElementById("SODIENTHOAI").value.trim();
+        const terms = document.getElementById("terms").checked;
+
+        if (!name) {
+            alert("Vui lòng nhập Họ và tên.");
+            return false;
+        }
+        if (!phone) {
+            alert("Vui lòng nhập Số điện thoại.");
+            return false;
+        }
+        if (!terms) {
+            alert("Vui lòng đồng ý với các điều khoản và điều kiện.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function submitForm() {
+        const form = document.getElementById('checkout-form');
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                window.location.href = '@Url.Action("PaymentWithPayPal", "Home")';
+            } else {
+                alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+            }
+        };
+        xhr.send(formData);
+    }
+</script>

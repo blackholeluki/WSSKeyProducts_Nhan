@@ -1,0 +1,39 @@
+﻿@model DoHoangNhan_2211110151_DeAnWeb.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "ChiTietTaiKhoan";
+    Layout = "~/Views/Shared/_masterforadmin.cshtml";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h2><strong>CHI TIẾT TÀI KHOẢN</strong></h2>
+        <br />
+    </div>
+
+    <div class="detail-table">
+        <table class="table table-bordered">
+            <tr>
+                <td>Email</td>
+                <td>@Html.DisplayFor(model => model.EMAIL)</td>
+            </tr>
+            <tr>
+                <td>Quyền truy cập</td>
+                <td>@Html.DisplayFor(model => model.ACCESS)</td>
+            </tr>
+            <tr>
+                <td>Mật khẩu (Đã mã hóa)</td>
+                <td>@Html.DisplayFor(model => model.PASSWORD)</td> <!-- Hiển thị mật khẩu đã mã hóa -->
+            </tr>
+            <tr>
+                <td>Mã Salt (Đã mã hóa)</td>
+                <td>@Html.DisplayFor(model => model.PASSWORDSALT)</td> <!-- Hiển thị mã salt đã mã hóa -->
+            </tr>
+        </table>
+    </div>
+
+    <p>
+        @Html.ActionLink("QUAY LẠI TRANG CHỦ", "Index", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+

@@ -137,18 +137,18 @@ Hệ thống được thiết kế để:
 1. **Clone dự án:**
 
    ```bash
-   git clone https://github.com/<your-username>/KeySoftwareShop.git
+   git clone https://github.com/<your-username>/WSSKeyProducts_Nhan.git
    ```
 2. **Khởi tạo CSDL:**
 
    * Mở `SSMS`.
-   * Tạo database `KeySoftwareDB`.
-   * Chạy file `Database/KeySoftwareDB.sql`.
+   * Tạo database `WEBDB_DOHOANGNHAN_2211110151`.
+   * Chạy file `Database/WebDeAn.sql`.
 3. **Cấu hình connection string:**
 
    ```xml
    <connectionStrings>
-       <add name="KeySoftwareDB"
+       <add name="WEBDB_DOHOANGNHAN_2211110151"
             connectionString="Data Source=YOUR_SERVER;Initial Catalog=KeySoftwareDB;Integrated Security=True"/>
    </connectionStrings>
    ```
@@ -167,12 +167,11 @@ Hệ thống được thiết kế để:
 
 * **Admin:**
 
-  * Email: `admin@hbmarket.com`
-  * Password: `admin123`
+  * Email: `admin@gmail.com`
+  * Password: `123456`
 * **User:**
 
-  * Email: `user@hbmarket.com`
-  * Password: `123456`
+  * Đăng ký tại website để có tài khoản
 
 ---
 

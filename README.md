@@ -149,7 +149,7 @@ Hệ thống được thiết kế để:
    ```xml
    <connectionStrings>
        <add name="WEBDB_DOHOANGNHAN_2211110151"
-            connectionString="Data Source=YOUR_SERVER;Initial Catalog=KeySoftwareDB;Integrated Security=True"/>
+            connectionString="Data Source=YOUR_SERVER;Initial Catalog=WEBDB_DOHOANGNHAN_2211110151;Integrated Security=True"/>
    </connectionStrings>
    ```
 4. **Chạy website:**

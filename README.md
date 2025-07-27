@@ -120,6 +120,6 @@ Dự án phát triển một nền tảng thương mại điện tử chuyên cu
 
 ## 🔑 Tài khoản mẫu
 
-* **Admin:** email: `admin@hbmarket.com`, pass: `admin123`
-* **User:** email: `user@hbmarket.com`, pass: `123456`
+* **Admin:** email: `user@gmail.com`, pass: `123456`
+* **User:** đăng ký trong website để có tài khoản user
 

@@ -25,7 +25,9 @@ Hệ thống được thiết kế để:
 
 | Thành phần         | Công nghệ sử dụng                             |
 | ------------------ | --------------------------------------------- |
-| Ngôn ngữ           | **C#, ASP.NET MVC 5**                         |
+| Ngôn ngữ           | **C#, ASP.NET MVC 5, HTML, CSS,               |
+|                    | JavaScript (Vanilla JS, jQuery),               |
+|                    | Razor View (ASP.NET MVC), Bootstrap 5**        |
 | Cơ sở dữ liệu      | **Microsoft SQL Server 2019**                 |
 | IDE                | **Visual Studio 2022**                        |
 | ORM                | LINQ to SQL                                   |

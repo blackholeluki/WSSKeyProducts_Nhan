@@ -14,7 +14,7 @@ Hệ thống được thiết kế để:
 ## 🎯 2. Mục tiêu dự án
 
 * Xây dựng website bán và cho thuê key phần mềm **đầy đủ chức năng thương mại điện tử**.
-* Giao diện có thể sữ dụng trên nhiều trình duyệt và thiết bị di động**.
+* Giao diện có thể sử dụng trên nhiều trình duyệt và thiết bị di động**.
 * **Tích hợp thanh toán trực tuyến**: PayPal, MoMo.
 * **Quản lý sản phẩm, hóa đơn, kho key, tài khoản người dùng** một cách hiệu quả.
 * Thiết kế **UI/UX hiện đại**, hỗ trợ **Dark/Light Mode**, responsive.
